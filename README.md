@@ -11,12 +11,12 @@ To create a basic to-do application, features include:
 
 ### CRUD OPERATIONS
 * [ ]  add item
-[ ]  delete item
-[ ]  print items
-[ ]  update items (mark complete)
-  [ ] mark items complete
-  [ ] mark items incomplete
+* [ ]  delete item
+* [ ]  print items
+* [ ]  update items (mark complete)
+  * [ ] mark items complete
+  * [ ] mark items incomplete
 
 ### SAVE OPERATIONS
-[ ] save items to file
-[ ] read items from file
+* [ ] save items to file
+* [ ] read items from file
