@@ -1,3 +1,5 @@
+use todo_list::fillers::{todo, Thing};
+
 fn main() {
-    println!("Hello, world!");
+    todo();
 }
