@@ -10,7 +10,7 @@ To create a basic to-do application, features include:
   5. save items to file
 
 ### CRUD OPERATIONS
-[ ]  add item
+* [ ]  add item
 [ ]  delete item
 [ ]  print items
 [ ]  update items (mark complete)
