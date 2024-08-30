@@ -23,6 +23,17 @@ pub mod to_do {
         }
     } // Task
 
+    impl std::fmt::Display for Task {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(
+                f,
+                "[{}] {}",
+                if self.complete { "X" } else { " " },
+                self.task
+            )
+        }
+    }
+
     /*  data structure to hold tasks
 
         TaskList:
@@ -67,11 +78,15 @@ pub mod to_do {
             }
         }
 
-        // testing
-        pub fn print(&self) {
-            for item in self.list.iter() {
-                println!("[{}] {}", if item.complete { "X" } else { " " }, item.task);
-            }
+        pub fn iter(&self) -> impl Iterator<Item = &Task> + '_ {
+            self.list.iter()
         }
+
+        // testing
+        // pub fn print(&self) {
+        //     for item in self.list.iter() {
+        //         println!("[{}] {}", if item.complete { "X" } else { " " }, item.task);
+        //     }
+        // }
     } // ToDoList
 }
