@@ -1,7 +1,9 @@
 use todo_list::fillers::{todo, Thing};
-use todo_list::to_do::{Task, ToDoList};
+use todo_list::{Task, ToDoList};
 
 fn main() {
+    todo("finish the rest of the code");
+
     let mut mylist = ToDoList::new();
 
     mylist.add(Task::from(false, "finish homework"));
