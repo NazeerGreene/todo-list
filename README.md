@@ -20,3 +20,10 @@ To create a basic to-do application, features include:
 ### SAVE OPERATIONS
 * [ ] save items to file
 * [ ] read items from file
+
+
+### TODOLIST FILE FORMAT
+`1:task #1
+ 0:task #2`
+
+ Where ':' denotes the delimiter; '1' denotes the task is complete; '2' denotes the task is incomplete
