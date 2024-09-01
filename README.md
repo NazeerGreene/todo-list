@@ -18,8 +18,8 @@ To create a basic to-do application, features include:
   * [x] mark items incomplete
 
 ### SAVE OPERATIONS
-* [ ] save items to file
-* [ ] read items from file
+* [x] save items to file
+* [x] read items from file
 
 
 ### TODOLIST FILE FORMAT

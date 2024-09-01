@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Task {
     // this restricts public access to the parent module
     pub(super) complete: bool,
