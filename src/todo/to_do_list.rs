@@ -1,9 +1,10 @@
 use std::fs::File;
-use std::io::{BufWriter, Write};
+use std::io::{BufRead, BufReader, BufWriter, Read, Write};
 
 use crate::todo::task::Task;
 
 const DEFAULT_CAPACITY: usize = 10; // for ToDoList underlying vec -- arbitrary
+const FILE_DELIMITER: &str = ":";
 
 pub struct ToDoList {
     list: Vec<Task>,
@@ -17,13 +18,27 @@ impl ToDoList {
     }
 
     pub fn load_from(filename: &str) -> std::io::Result<Self> {
+        let mut todolist = ToDoList::new();
+
         let file = File::open(filename)?;
-        /*
-            1. open file
-                - good path: go to read contents
-                - bad path: return Result::Error
-            2. read contents from file
-        */
+        let reader = BufReader::new(file);
+
+        for line in reader.lines() {
+            let line = line?;
+            // unwraps and handles errors
+            /* The above is equivalent to:
+                let line = match line {
+                    Ok(value) => value,
+                    Err(e) => return Err(e),
+                };
+            */
+
+            if let Some((completed_str, task)) = line.split_once(FILE_DELIMITER) {
+                todolist.add(Task::from(completed_str == "1", task));
+            } // else, skip
+        }
+
+        Ok(todolist)
     }
 
     pub fn add(&mut self, task: Task) {
@@ -42,6 +57,10 @@ impl ToDoList {
         if let Some(task) = self.list.get_mut(idx) {
             task.complete = !task.complete;
         }
+    }
+
+    pub fn size(&self) -> usize {
+        self.list.len()
     }
 
     // this is the preferred way to return an iterator to an underlying
