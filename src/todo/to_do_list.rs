@@ -1,7 +1,7 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, BufWriter, Read, Write};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 
-use crate::todo::task::Task;
+use super::task::Task;
 
 const DEFAULT_CAPACITY: usize = 10; // for ToDoList underlying vec -- arbitrary
 const FILE_DELIMITER: &str = ":";
@@ -168,8 +168,10 @@ mod tests {
 
         let second = ToDoList::load_from(output_file).unwrap();
 
+        // make sure the two lists have the same number of elements
         assert_eq!(first.size(), second.size());
 
+        // each element should be the same, no data modification
         for i in 0..first.size() {
             let firsts_task = first.get(i).unwrap();
             let seconds_task = second.get(i).unwrap();
