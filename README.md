@@ -23,7 +23,7 @@ To create a basic to-do application, features include:
 
 
 ### TODOLIST FILE FORMAT
-`1:task #1\
- 0:task #2`
+`1:task #1`\
+`0:task #2`
 
  Where ':' denotes the delimiter; '1' denotes the task is complete; '0' denotes the task is incomplete
