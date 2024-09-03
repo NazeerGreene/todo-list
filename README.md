@@ -21,6 +21,13 @@ To create a basic to-do application, features include:
 * [x] save items to file
 * [x] read items from file
 
+### USER INTERACTION
+allow user to...
+* [ ] add task to list
+* [ ] remove task from list
+* [ ] toggle task as complete/incomplete
+* [ ] exit safely and save list
+
 
 ### TODOLIST FILE FORMAT
 `1:task #1`\
