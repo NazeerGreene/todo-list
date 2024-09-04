@@ -21,6 +21,14 @@ pub fn run(mut todolist: ToDoList) -> ToDoList {
     //     std::process::exit(2);
     // }
 
+    //     Order of operations matter!
+    //     - FIRST: 'add task' should come before toggle so that user can add the item and then toggle it
+    //         as finished; if toggle comes first, then the newly added task would never be marked finish
+    //         in that single command.
+    //     - BETWEEN: 'remove task' & 'toggle task' can come in any order.
+    //     - LAST: 'print list' should go last so all operations (add, remove, toggle) can finish
+    //         and then display the results!
+
     if let Ok(new_task) = args.add {
         handle_add(&mut todolist, new_task)
     } else {
@@ -53,6 +61,9 @@ struct Args {
     toggle: Result<usize, pico_args::Error>,
     // unregonized: Vec<std::ffi::OsString>,
 }
+
+// MOST OF THESE COULD BE INLINED, BUT THIS
+// STRUCTURE ALLOWS EASIER MODIFICATION IN THE FUTURE
 
 fn handle_print(list: &ToDoList) {
     for (num, item) in list.iter().enumerate() {
