@@ -1,4 +1,4 @@
-use std::fs::{File, OpenOptions};
+use std::fs::File;
 use std::io::{BufRead, BufReader, BufWriter, Write};
 
 use super::task::Task;
@@ -42,9 +42,9 @@ impl ToDoList {
         Ok(todolist)
     }
 
-    pub fn add(&mut self, task: Task) {
-        if !task.task.is_empty() {
-            self.list.push(task);
+    pub fn add(&mut self, new_task: Task) {
+        if !new_task.task.is_empty() {
+            self.list.push(new_task);
         }
     }
 

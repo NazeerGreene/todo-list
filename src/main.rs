@@ -1,34 +1,35 @@
-use pico_args::Arguments;
+use pico_args;
 use std::io::{self, Write};
 use todo_list::{Task, ToDoList};
 
 const DEFAULT_USER_OUTPUT_FILE: &str = "todolist.txt";
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     // load/create list
     let mut todolist = ToDoList::load_from(DEFAULT_USER_OUTPUT_FILE).unwrap_or(ToDoList::new());
 
     // operate on list
-    // list -- done
-    // add
-    // remove
-    // toggle
     let mut args = pico_args::Arguments::from_env();
 
     let args = Args {
         print: args.contains(["-l", "--list"]),
+        add: args.value_from_str(["-a", "--add"]),
         remove: args.value_from_str(["-r", "--remove"]),
         toggle: args.value_from_str(["-t", "--toggle"]),
     };
 
-    if args.toggle.is_ok() {
-        let list_idx = args.toggle.unwrap() - 1; // "user selection" to "vec index"" conversion
-        handle_toggle(&mut todolist, list_idx);
+    if let Ok(new_task) = args.add {
+        handle_add(&mut todolist, new_task)
     } else {
     }
 
-    if args.remove.is_ok() {
-        todo!("remove option not yet implemented");
+    if let Ok(list_idx) = args.toggle {
+        handle_toggle(&mut todolist, list_idx - 1); // "user selection" to "vec index"" conversion
+    } else {
+    }
+
+    if let Ok(list_idx) = args.remove {
+        handle_remove(&mut todolist, list_idx - 1); // "user selection" to "vec index"" conversion
     } else {
     }
 
@@ -44,18 +45,20 @@ fn main() {
             std::process::exit(1);
         }
     }
+
+    Ok(())
 }
 
 struct Args {
     print: bool,
-    // add: bool,
+    add: Result<String, pico_args::Error>,
     remove: Result<usize, pico_args::Error>,
     toggle: Result<usize, pico_args::Error>,
 }
 
 fn handle_print(list: &ToDoList) {
-    for item in list.iter() {
-        println!("{}", item);
+    for (num, item) in list.iter().enumerate() {
+        println!("({:02}) {}", num + 1, item);
     }
 }
 
@@ -63,9 +66,13 @@ fn handle_toggle(todolist: &mut ToDoList, list_idx: usize) {
     todolist.toggle_task(list_idx);
 }
 
-fn handle_remove(todolist: &mut ToDoList, list_idx: Result<usize, pico_args::Error>) {}
+fn handle_remove(todolist: &mut ToDoList, list_idx: usize) {
+    let _removed_task = todolist.remove(list_idx);
+}
 
-fn handle_add(todolist: &mut ToDoList) {}
+fn handle_add(todolist: &mut ToDoList, new_task: String) {
+    todolist.add(Task::from(false, &new_task));
+}
 
 fn handle_error(error: pico_args::Error) {
     // let emessage = match error {
